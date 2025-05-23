@@ -5,6 +5,7 @@
 //  Created by apple on 5/23/25.
 //
 
+
 import SwiftUI
 
 struct ContentView: View {
@@ -12,24 +13,30 @@ struct ContentView: View {
         
         HStack{
             CardView(isFaceUp: true)
-            CardView()
+            CardView(isFaceUp: true)
             CardView()
         }.foregroundColor(.orange)
             .padding()
     }
     
     struct CardView: View {
-        var isFaceUp: Bool = false
+       @State var isFaceUp = false
         
         var body: some View {
-            ZStack{
+            ZStack {
+                //we use let here because roudedRectagle dont change
+                // we dont neew to tell the type of base cause swift know the type already
+                let  base  = RoundedRectangle(cornerRadius: 12)
                 if isFaceUp {
-                    RoundedRectangle(cornerRadius: 12).foregroundColor(.white)
-                    RoundedRectangle(cornerRadius: 12).strokeBorder(lineWidth: 2)
+                    base.fill(.white)
+                    base.strokeBorder(lineWidth: 2)
                     Text("👻").font(.largeTitle)
                 }else {
-                    RoundedRectangle(cornerRadius: 12)
+                    base.fill()
                 }
+            }.onTapGesture {
+                //onTaGesture is just a function
+                isFaceUp.toggle() // change the value
             }
         }
     }
